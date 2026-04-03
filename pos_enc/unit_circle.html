@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unit Circle Positional Encoding</title>
+<style>
+body {
+    margin: 0;
+    font-family: Georgia, serif;
+    background: white;
+}
+
+.anim-wrap {
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    box-sizing: border-box;
+}
+
+.anim-title {
+    font-size: 14px;
+    color: #666;
+    display: block;
+    margin-bottom: 10px;
+}
+
+.anim-controls {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    margin-top: 12px;
+}
+
+.anim-caption {
+    margin-top: 10px;
+    font-size: 14px;
+    color: #666;
+}
+</style>
+</head>
+<body>
+
+<div class="anim-wrap">
+  <span class="anim-title">Interactive · Unit Circle</span>
+  <canvas id="pe-unit-circle" width="600" height="310"></canvas>
+
+  <div class="anim-controls">
+    <label>ω</label>
+    <input type="range" id="omega-slider" min="0.05" max="1.5" step="0.01" value="0.30">
+    <span id="omega-value">0.30</span>
+  </div>
+
+  <div class="anim-caption">
+    Each token position maps to angle ω·i on the unit circle.
+  </div>
+</div>
+
+<script>
+(() => {
+    const canvas = document.getElementById("pe-unit-circle");
+    const slider = document.getElementById("omega-slider");
+    const value = document.getElementById("omega-value");
+    const ctx = canvas.getContext("2d");
+
+    let omega = 0.3;
+    let tick = 0;
+    const N = 16;
+
+    function draw() {
+        const w = canvas.width;
+        const h = canvas.height;
+        ctx.clearRect(0,0,w,h);
+
+        const cx = w/2;
+        const cy = h/2;
+        const R = 90;
+
+        ctx.beginPath();
+        ctx.arc(cx,cy,R,0,Math.PI*2);
+        ctx.strokeStyle = "#aaa";
+        ctx.stroke();
+
+        for(let i=0;i<N;i++){
+            const a = omega*i;
+            const x = cx + R*Math.cos(a);
+            const y = cy - R*Math.sin(a);
+
+            ctx.beginPath();
+            ctx.arc(x,y,3,0,Math.PI*2);
+            ctx.fillStyle = "#D48C70";
+            ctx.fill();
+        }
+
+        const active = Math.floor((tick*0.5)%N);
+        const angle = omega*active;
+        const px = cx + R*Math.cos(angle);
+        const py = cy - R*Math.sin(angle);
+
+        ctx.beginPath();
+        ctx.arc(px,py,6,0,Math.PI*2);
+        ctx.fill();
+
+        tick += 0.03;
+        requestAnimationFrame(draw);
+    }
+
+    slider.addEventListener("input", () => {
+        omega = parseFloat(slider.value);
+        value.textContent = omega.toFixed(2);
+    });
+
+    draw();
+})();
+</script>
+
+</body>
+</html>
