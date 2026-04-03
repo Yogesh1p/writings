@@ -1,114 +1,204 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Unit Circle Positional Encoding</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Unit Circle</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600&display=swap" rel="stylesheet">
+
 <style>
-body {
-    margin: 0;
-    font-family: Georgia, serif;
-    background: white;
+:root{
+    --accent:#D48C70;
+    --border:rgba(120,120,120,0.35);
+    --text:rgba(120,120,120,0.95);
+    --muted:rgba(120,120,120,0.75);
 }
 
-.anim-wrap {
-    padding: 20px;
-    border: 1px solid #ddd;
-    border-radius: 12px;
-    box-sizing: border-box;
+html, body{
+    margin:0;
+    padding:0;
+    width:100%;
+    height:100%;
+    background:transparent;
+    overflow:hidden;
+    font-family:"Lora", serif;
 }
 
-.anim-title {
-    font-size: 14px;
-    color: #666;
-    display: block;
-    margin-bottom: 10px;
+.figure-shell{
+    width:100%;
+    box-sizing:border-box;
+    padding:14px 10px 10px;
+    background:transparent;
 }
 
-.anim-controls {
-    display: flex;
-    gap: 10px;
-    align-items: center;
-    margin-top: 12px;
+.title{
+    font-size:0.95rem;
+    color:var(--muted);
+    margin-bottom:8px;
 }
 
-.anim-caption {
-    margin-top: 10px;
-    font-size: 14px;
-    color: #666;
+canvas{
+    display:block;
+    width:100%;
+    height:280px;
+}
+
+.controls{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    margin-top:8px;
+    margin-bottom:8px;
+}
+
+.controls label{
+    color:var(--text);
+    font-size:0.95rem;
+}
+
+.controls input{
+    flex:1;
+}
+
+.controls span{
+    width:52px;
+    color:var(--accent);
+    font-size:1rem;
+    font-weight:600;
+}
+
+.readout{
+    text-align:center;
+    color:var(--text);
+    font-size:0.92rem;
+    margin-top:4px;
+}
+
+.caption{
+    text-align:center;
+    color:var(--muted);
+    font-size:0.9rem;
+    margin-top:8px;
+    line-height:1.45;
 }
 </style>
 </head>
 <body>
 
-<div class="anim-wrap">
-  <span class="anim-title">Interactive · Unit Circle</span>
-  <canvas id="pe-unit-circle" width="600" height="310"></canvas>
+<div class="figure-shell">
+    <div class="title">Interactive · Unit Circle</div>
 
-  <div class="anim-controls">
-    <label>ω</label>
-    <input type="range" id="omega-slider" min="0.05" max="1.5" step="0.01" value="0.30">
-    <span id="omega-value">0.30</span>
-  </div>
+    <canvas id="canvas"></canvas>
 
-  <div class="anim-caption">
-    Each token position maps to angle ω·i on the unit circle.
-  </div>
+    <div class="controls">
+        <label>ω</label>
+        <input type="range" id="omega" min="0.05" max="1.5" step="0.01" value="0.30">
+        <span id="omegaVal">0.30</span>
+    </div>
+
+    <div class="readout" id="readout">
+        PE(0) = [1.00, 0.00]
+    </div>
+
+    <div class="caption">
+        Each token position maps to angle ω·i on the unit circle.
+    </div>
 </div>
 
 <script>
 (() => {
-    const canvas = document.getElementById("pe-unit-circle");
-    const slider = document.getElementById("omega-slider");
-    const value = document.getElementById("omega-value");
+    const canvas = document.getElementById("canvas");
+    const slider = document.getElementById("omega");
+    const omegaVal = document.getElementById("omegaVal");
+    const readout = document.getElementById("readout");
     const ctx = canvas.getContext("2d");
 
-    let omega = 0.3;
+    let omega = 0.30;
     let tick = 0;
     const N = 16;
 
-    function draw() {
-        const w = canvas.width;
-        const h = canvas.height;
-        ctx.clearRect(0,0,w,h);
+    function resize(){
+        const dpr = window.devicePixelRatio || 1;
+        const width = canvas.clientWidth;
+        const height = 280;
 
-        const cx = w/2;
-        const cy = h/2;
-        const R = 90;
+        canvas.width = width * dpr;
+        canvas.height = height * dpr;
+        ctx.setTransform(dpr,0,0,dpr,0,0);
 
-        ctx.beginPath();
-        ctx.arc(cx,cy,R,0,Math.PI*2);
-        ctx.strokeStyle = "#aaa";
-        ctx.stroke();
-
-        for(let i=0;i<N;i++){
-            const a = omega*i;
-            const x = cx + R*Math.cos(a);
-            const y = cy - R*Math.sin(a);
-
-            ctx.beginPath();
-            ctx.arc(x,y,3,0,Math.PI*2);
-            ctx.fillStyle = "#D48C70";
-            ctx.fill();
-        }
-
-        const active = Math.floor((tick*0.5)%N);
-        const angle = omega*active;
-        const px = cx + R*Math.cos(angle);
-        const py = cy - R*Math.sin(angle);
-
-        ctx.beginPath();
-        ctx.arc(px,py,6,0,Math.PI*2);
-        ctx.fill();
-
-        tick += 0.03;
-        requestAnimationFrame(draw);
+        return {width, height};
     }
+
+    let size = resize();
+    window.addEventListener("resize", () => size = resize());
 
     slider.addEventListener("input", () => {
         omega = parseFloat(slider.value);
-        value.textContent = omega.toFixed(2);
+        omegaVal.textContent = omega.toFixed(2);
     });
+
+    function draw(){
+        const {width, height} = size;
+        ctx.clearRect(0,0,width,height);
+
+        const cx = width / 2;
+        const cy = height / 2;
+        const R = Math.min(width, height) * 0.28;
+
+        // axes
+        ctx.strokeStyle = "rgba(160,160,160,0.25)";
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.moveTo(cx - R - 20, cy);
+        ctx.lineTo(cx + R + 20, cy);
+        ctx.moveTo(cx, cy - R - 20);
+        ctx.lineTo(cx, cy + R + 20);
+        ctx.stroke();
+
+        // main circle
+        ctx.beginPath();
+        ctx.arc(cx, cy, R, 0, Math.PI * 2);
+        ctx.strokeStyle = "rgba(160,160,160,0.35)";
+        ctx.stroke();
+
+        for(let i=0;i<N;i++){
+            const a = omega * i;
+            const x = cx + R * Math.cos(a);
+            const y = cy - R * Math.sin(a);
+
+            ctx.beginPath();
+            ctx.arc(x,y,3,0,Math.PI*2);
+            ctx.fillStyle = "rgba(212,140,112,0.65)";
+            ctx.fill();
+        }
+
+        const active = Math.floor((tick * 0.55) % N);
+        const angle = omega * active;
+
+        const px = cx + R * Math.cos(angle);
+        const py = cy - R * Math.sin(angle);
+
+        ctx.beginPath();
+        ctx.setLineDash([4,4]);
+        ctx.moveTo(cx,cy);
+        ctx.lineTo(px,py);
+        ctx.strokeStyle = "#D48C70";
+        ctx.stroke();
+        ctx.setLineDash([]);
+
+        ctx.beginPath();
+        ctx.arc(px,py,7,0,Math.PI*2);
+        ctx.fillStyle = "#D48C70";
+        ctx.fill();
+
+        readout.textContent =
+            `PE(${active}) = [${Math.cos(angle).toFixed(2)}, ${Math.sin(angle).toFixed(2)}]`;
+
+        tick += 0.025;
+        requestAnimationFrame(draw);
+    }
 
     draw();
 })();
