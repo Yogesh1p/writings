@@ -12,8 +12,11 @@
   <meta name="reading_time" content="{{ page.reading_time }}">
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
 
-<link rel="stylesheet" href="{{ '/css/base.css' | relative_url }}">
+  <link rel="stylesheet" href="{{ '/css/base.css' | relative_url }}">
   <link rel="stylesheet" href="{{ '/css/articles.css' | relative_url }}">
 
   <script>
@@ -25,7 +28,7 @@
 </head>
 <body>
 
-  <div id="global-nav" data-root="/" data-sticky="true"></div>
+  <div id="global-nav" data-root="{{ '/' | relative_url }}" data-sticky="true"></div>
   <div class="reading-progress"></div>
 
   <main class="page-wrap">
@@ -44,7 +47,7 @@
     </div>
   </main>
 
-<script src="{{ '/js/base.js' | relative_url }}" defer></script>
+  <script src="{{ '/js/base.js' | relative_url }}" defer></script>
   <script src="{{ '/js/components.js' | relative_url }}" defer></script>
   <script src="{{ '/js/article_components.js' | relative_url }}" defer></script>
 
