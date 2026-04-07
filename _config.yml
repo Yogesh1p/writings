@@ -1,0 +1,5 @@
+title: Yogesh Writings
+markdown: kramdown
+collections:
+  articles:
+    output: true
