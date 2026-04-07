@@ -1,5 +1,17 @@
 title: Yogesh Writings
+baseurl: "/writings"
+url: "https://yogesh1p.github.io"
+
 markdown: kramdown
+
 collections:
   articles:
     output: true
+    permalink: /:collection/:name/
+
+defaults:
+  - scope:
+      path: ""
+      type: articles
+    values:
+      layout: article
