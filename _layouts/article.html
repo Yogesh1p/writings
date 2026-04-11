@@ -17,7 +17,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="{{ '/css/base.css' | relative_url }}">
-  <link rel="stylesheet" href="{{ '/css/articles.css' | relative_url }}">
+
 
   <script>
     (() => {
@@ -28,8 +28,8 @@
 </head>
 <body>
 
-  <div id="global-nav" data-root="{{ '/' | relative_url }}" data-sticky="true"></div>
-  <div class="reading-progress"></div>
+  <div id="global-nav" data-root="{{ '/' | relative_url }}" data-sticky="false"></div>
+
 
   <main class="page-wrap">
     <div class="article-layout">
@@ -48,7 +48,6 @@
   </main>
 
   <script src="{{ '/js/base.js' | relative_url }}" defer></script>
-  <script src="{{ '/js/components.js' | relative_url }}" defer></script>
   <script src="{{ '/js/article_components.js' | relative_url }}" defer></script>
 
 </body>

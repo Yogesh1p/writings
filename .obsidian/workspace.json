@@ -11,14 +11,10 @@
             "id": "cd4e860d7d6d9373",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "_articles/Making Room for Meaning.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "Making Room for Meaning"
+              "type": "graph",
+              "state": {},
+              "icon": "lucide-git-fork",
+              "title": "Graph view"
             }
           }
         ]
@@ -180,25 +176,57 @@
       "daily-notes:Open today's daily note": false,
       "templates:Insert template": false,
       "command-palette:Open command palette": false,
-      "bases:Create new base": false
+      "bases:Create new base": false,
+      "obsidian-importer:Open Importer": false
     }
   },
   "active": "cd4e860d7d6d9373",
   "lastOpenFiles": [
-    "articles/Making Room for Meaning.md",
-    "_site/making-room-for-meaning/index.html",
-    "_site/making-room-for-meaning",
-    "_articles/_template.html",
-    "_articles/Making Room for Meaning.md",
-    "_articles",
-    "_config.yml",
-    "_site/js/components.js",
-    "_site/js/base.js",
-    "_site/js/article_components.js",
-    "_site/css/base.css",
-    "_site/data/articles.js",
-    "_site/assets/favicon.svg",
-    "_site/README.md",
-    "assets/favicon.svg"
+    "_articles/Approximating-feeling.md",
+    "_site/from-presence-to-preservation/index.html",
+    "_site/from-presence-to-preservation",
+    "_site/articles/Approximating-feeling.md",
+    "_site/articles",
+    "_site/HTML import/182304248.thoughts.md",
+    "_site/articles/182304248.thoughts.md",
+    "_site/HTML import/Approximating-feeling.md",
+    "_articles/The-value-function.md",
+    "_site/the-value-function-of-a-life/index.html",
+    "_site/the-value-function-of-a-life",
+    "_site/articles/The-value-function.md",
+    "_site/HTML import/Attachments/921eb3b2-9f41-468b-a4e2-c3bf043a2eca_1430x1324.png",
+    "_site/HTML import/Attachments/8ad856d8-84a5-4ceb-8ef9-73ca356302a4_612x437.jpeg",
+    "_site/HTML import/Attachments/624ccca3-364c-48f0-a0f7-45e917a5f264_825x413.jpeg",
+    "_site/HTML import/Attachments/1b1d82e4-1e7b-443c-ab10-896b407e4972_1618x1106.png",
+    "_site/HTML import/Attachments/0dded54c-7a0e-4ec3-a38d-a3d051527f6f_1400x700.jpeg",
+    "_site/HTML import/Attachments/058a5425-c036-4dec-a26b-9e945d6b187c_1400x700.jpeg",
+    "_site/HTML import/Attachments",
+    "_site/HTML import/193473520.do-happiness-and-meaning-ask-opposite.md",
+    "_site/HTML import/192841905.road-to-1m-context.md",
+    "_site/HTML import/192683879.influencing-feelings.md",
+    "_site/HTML import/192566156.cnn.md",
+    "_site/HTML import/191116046.two-regimens-failed-heres-what-finally.md",
+    "_site/HTML import/189656400.diet.md",
+    "_site/HTML import/189528267.718.md",
+    "_site/HTML import/189444301.autoregressive-models.md",
+    "_site/HTML import/188148772.my-expectations-on-future-of-ai.md",
+    "_site/HTML import/188148510.global-state-of-fighting-microbes.md",
+    "_site/HTML import/188144978.understanding-feelings.md",
+    "_site/HTML import/188133103.the-observer-state.md",
+    "_site/HTML import/187824519.the-avatar-state.md",
+    "_site/HTML import/185013969.a-working-model-for-love.md",
+    "_site/HTML import/184944447.the-inner-government.md",
+    "_site/HTML import/184728941.is-ai-containable.md",
+    "_site/HTML import/184515986.how-a-curable-infection-became-a.md",
+    "_site/HTML import/184426193.when-quantum-physics-started-sounding.md",
+    "_site/HTML import/184085766.nerds-are-the-neurons-of-earth.md",
+    "_site/HTML import",
+    "HTML import/Attachments/1b1d82e4-1e7b-443c-ab10-896b407e4972_1618x1106.png",
+    "HTML import/Attachments/921eb3b2-9f41-468b-a4e2-c3bf043a2eca_1430x1324.png",
+    "HTML import/Attachments/058a5425-c036-4dec-a26b-9e945d6b187c_1400x700.jpeg",
+    "HTML import/Attachments/0dded54c-7a0e-4ec3-a38d-a3d051527f6f_1400x700.jpeg",
+    "HTML import/Attachments",
+    "HTML import",
+    "_site/making-room-for-meaning/index.html"
   ]
 }

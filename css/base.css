@@ -1,230 +1,342 @@
 /* ============================================================
-   base.css — Connecting the Dots
-   Shared styles: variables, reset, nav, typography, utilities.
+   base.css — Connecting the Dots (Consolidated)
+   Variables, Reset, Nav, Typography, Article Layout, Settings
    ============================================================ */
 
-/* ── CSS Variables ── */
+/* ── 1. Import 5 Google Fonts ── */
+@import url('https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400;1,700&family=Fira+Sans:ital,wght@0,400;0,600;1,400&family=Inter:wght@400;600;700&family=Lora:ital,wght@0,400;0,600;0,700;1,400&family=Merriweather:ital,wght@0,400;0,700;1,400&display=swap');
+
+/* ── 2. Font System Variables ── */
 :root {
-  --bg:        #FDFBF7;
-  --text:      #4A3F35;
-  --accent:    #D48C70;
-  --surface:   #F4EFE6;
-  --border:    #E8DFD1;
-  --muted:     #847769;
-  --dark:      #2D241E;
-  --highlight: rgba(212, 140, 112, 0.15);
-  --card-bg:   #FFFFFF;
-  --code-bg:   var(--surface);
-  --code-text: #5A4E42;
+  --font-body: 'Lora', Georgia, serif;
+  --font-heading: 'Lora', Georgia, serif;
+}
+:root {
+  --accent: #34642e;
+  --highlight: rgba(52, 100, 46, 0.14);
+
+  --bg: #fcf6e5;
+  --surface: #f6f0df;
+  --border: #d9d2be;
+
+  --text: #2b2a24;
+  --muted: #7a7464;
+  --dark: #1f241d;
+  --card-bg: #f8f2e2;
 }
 
 [data-theme="dark"] {
-  --bg:        #16100C;
-  --text:      #C5B49A;
-  --accent:    #D48C70;
-  --surface:   #1F1510;
-  --border:    #2E2018;
-  --muted:     #736050;
-  --dark:      #EAD9C2;
-  --highlight: rgba(212, 140, 112, 0.12);
-  --card-bg:   #1C1208;
-  --code-bg:   #130E0A;
-  --code-text: #B0A088;
+  --accent: #8faa6b;
+  --highlight: rgba(143, 170, 107, 0.18);
+
+  --bg: #161814;
+  --surface: #1d211b;
+  --border: #31382e;
+
+  --text: #ece7d5;
+  --muted: #a8af9c;
+  --dark: #f6f2e6;
+  --card-bg: #20241e;
+}
+/* (You can still delete the old [data-palette="sepia/slate/sage"] blocks entirely as noted in your code!) */
+
+/* You can delete the old [data-palette="sepia/slate/sage"] blocks entirely! */
+/* SEPIA PALETTE (Vintage/Brown) */
+html[data-palette="sepia"] {
+  --bg: #F4ECD8; --text: #433422; --accent: #C47245; --surface: #E8DCC2; --border: #D1C09F; --muted: #857155; --dark: #2B1D0F; --highlight: rgba(196, 114, 69, 0.15); --card-bg: #FDF6E3;
+}
+html[data-theme="dark"][data-palette="sepia"] {
+  --bg: #2B2117; --text: #D0BCA0; --accent: #C47245; --surface: #362A1D; --border: #4A3C2B; --muted: #8C7A63; --dark: #F4ECD8; --highlight: rgba(196, 114, 69, 0.15); --card-bg: #221A11;
 }
 
-/* ── Reset ── */
-* { 
-  margin: 0; 
-  padding: 0; 
-  box-sizing: border-box; 
+/* SLATE PALETTE (Cool/Blue) */
+html[data-palette="slate"] {
+  --bg: #F4F6F8; --text: #333D47; --accent: #4A7A96; --surface: #E2E8F0; --border: #CBD5E1; --muted: #64748B; --dark: #1E293B; --highlight: rgba(74, 122, 150, 0.15); --card-bg: #FFFFFF;
+}
+html[data-theme="dark"][data-palette="slate"] {
+  --bg: #0F172A; --text: #CBD5E1; --accent: #5E9CBF; --surface: #1E293B; --border: #334155; --muted: #94A3B8; --dark: #F8FAFC; --highlight: rgba(94, 156, 191, 0.15); --card-bg: #0B1120;
 }
 
-/* ── Body ── */
+/* SAGE PALETTE (Nature/Green) */
+html[data-palette="sage"] {
+  --bg: #F5F7F5; --text: #3A473D; --accent: #587F61; --surface: #E6EBE6; --border: #CDD6CD; --muted: #6D7F71; --dark: #1E2620; --highlight: rgba(88, 127, 97, 0.15); --card-bg: #FFFFFF;
+}
+html[data-theme="dark"][data-palette="sage"] {
+  --bg: #131A15; --text: #B4C4B7; --accent: #6FA37A; --surface: #1D261F; --border: #2B382F; --muted: #829686; --dark: #E8EFE9; --highlight: rgba(111, 163, 122, 0.15); --card-bg: #0E130F;
+}
+
+/* ── 4. Global Reset & Body ── */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
 body {
-  font-family: 'Lora', Georgia, serif;
+  font-family: var(--font-body); /* Applies chosen body font */
   background: var(--bg);
   color: var(--text);
   font-size: 1.15rem;
   line-height: 1.8;
   overflow-x: hidden;
   opacity: 0;
-  /* Only fade-in on page load; color changes are instant via html[data-theme] */
   transition: opacity 0.5s ease;
 }
-
 body.loaded { opacity: 1; }
 
-.page-wrap { 
-  max-width: 900px; 
-  margin: 0 auto; 
-  padding: 0 3rem; 
-}
+.page-wrap { max-width: 900px; margin: 0 auto; padding: 0 3rem; }
 
-/* ── Smooth Theme Transitions ── */
+/* Theme Transitioning Classes */
 .theme-transitioning h1, .theme-transitioning h2, .theme-transitioning h3,
 .theme-transitioning p, .theme-transitioning a, .theme-transitioning li,
-.theme-transitioning blockquote, .theme-transitioning .lede p,
-.theme-transitioning .tax-root, .theme-transitioning .tax-branch-label,
-.theme-transitioning .ch-label, .theme-transitioning .pct,
-.theme-transitioning .eq-math, .theme-transitioning .eq-comment,
-.theme-transitioning .card-title, .theme-transitioning .card-num,
-.theme-transitioning .anatomy-card p {
+.theme-transitioning .article-header__title, .theme-transitioning .article-header__subtitle {
   transition: color 350ms cubic-bezier(0.4, 0, 0.2, 1) !important;
 }
 
-/* ── Reading Progress Bar ── */
-.reading-progress {
-  position: fixed; 
-  top: 0; 
-  left: 0; 
-  height: 4px;
-  width: 0%; 
-  background: var(--accent); 
-  z-index: 2000;
-  transition: width 0.1s linear;
-}
-
-/* ============================================================
-   NAVIGATION (Desktop Layout)
-   ============================================================ */
+/* ── 5. Navigation & UI Controls ── */
 nav {
-  display: flex;
-  justify-content: space-between; /* Pushes left and right groups apart */
-  align-items: center;
-  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-  font-size: 0.95rem;
-  font-weight: 500;
-  letter-spacing: 0.01em;
-  padding: 0.75rem 4rem;
+  display: flex; justify-content: space-between; align-items: center;
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif; font-size: 0.95rem;
+  font-weight: 500; padding: 0.75rem 4rem;
   background-color: color-mix(in srgb, var(--bg) 85%, transparent);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
 }
-
 nav.nav-sticky { position: sticky; top: 0; z-index: 1000; }
-nav.nav-static { position: relative; }
-
-nav a { 
-  color: var(--muted); 
-  text-decoration: none; 
-  transition: color 0.2s; 
-}
+nav a { color: var(--muted); text-decoration: none; transition: color 0.2s; }
 nav a:hover, nav a.active { color: var(--accent); }
-
-/* Left side links */
-.nav-center {
-  display: flex;
-  align-items: center;
-  gap: 2.5rem;
-}
-
-.nav-center a { 
-  position: relative; 
-  display: inline-flex;
-  align-items: center;
-  height: 32px; 
-}
-
+.nav-center { display: flex; align-items: center; gap: 2.5rem; }
+.nav-center a { position: relative; display: inline-flex; align-items: center; height: 32px; }
 .nav-center a::after {
-  content: ""; 
-  position: absolute; 
-  left: 0; 
-  bottom: 2px; 
-  width: 0; 
-  height: 1px; 
-  background: var(--accent);
-  transition: width 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+  content: ""; position: absolute; left: 0; bottom: 2px; width: 0; height: 1px;
+  background: var(--accent); transition: width 0.3s ease;
 }
 .nav-center a:hover::after, .nav-center a.active::after { width: 100%; }
+.nav-right { display: flex; align-items: center; gap: 15px; }
 
-/* Right side tools */
-.nav-right {
-  display: flex;
-  align-items: center;
+
+/* ── Settings Menu Styling (Custom Font & Color Pickers) ── */
+.settings-container {
+  position: relative;
+  display: inline-block;
 }
 
-/* ── Theme Toggle Button ── */
-.theme-toggle {
-  background: transparent;
+.settings-btn {
+  background: none;
   border: none;
   cursor: pointer;
-  width: 24px;
-  height: 24px;
-  position: relative;
+  color: var(--muted);
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: 6px;
+  border-radius: 8px;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.settings-btn:hover, .settings-btn:focus-visible {
+  color: var(--accent);
+  background-color: var(--highlight);
+  outline: none;
+}
+
+.settings-dropdown {
+  position: absolute;
+  right: 0;
+  top: 100%;
+  margin-top: 12px;
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 18px;
+  min-width: 240px;
+  z-index: 1000;
+  box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1), 0 8px 10px -6px rgba(0,0,0,0.05);
+  visibility: hidden;
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: visibility 0s 0.2s, opacity 0.2s ease, transform 0.2s ease;
+}
+
+.settings-dropdown.show {
+  visibility: visible;
+  opacity: 1;
+  transform: translateY(0);
+  transition: visibility 0s 0s, opacity 0.2s ease, transform 0.2s ease;
+}
+
+.setting-item {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+}
+.setting-item:last-child {
+  margin-bottom: 0;
+}
+
+.setting-item label {
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 0.75rem;
+  margin-bottom: 8px;
+  font-weight: 700;
+  text-transform: uppercase;
   color: var(--muted);
+  letter-spacing: 0.08em;
 }
 
-.theme-toggle:focus { outline: none; }
+/* Custom Input Wrappers */
+.custom-input-wrapper {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+/* Text Input for Fonts */
+.custom-text-input {
+  flex: 1;
+  width: 100%;
+  padding: 8px 12px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  background-color: var(--bg);
+  color: var(--text);
+  font-size: 0.9rem;
+  font-family: inherit;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.custom-text-input:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--highlight);
+}
+
+/* Color Picker Swatches */
+.custom-color-input {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  width: 38px;
+  height: 38px;
+  padding: 0;
+  border: 2px solid var(--border);
+  border-radius: 50%; /* Makes it a perfect circle */
+  background: none;
+  cursor: pointer;
+  flex-shrink: 0;
+  overflow: hidden;
+  transition: transform 0.2s ease;
+}
+
+.custom-color-input:hover {
+  transform: scale(1.05);
+}
+
+.custom-color-input::-webkit-color-swatch-wrapper {
+  padding: 0;
+}
+.custom-color-input::-webkit-color-swatch {
+  border: none;
+  border-radius: 50%;
+}
+.custom-color-input::-moz-color-swatch {
+  border: none;
+  border-radius: 50%;
+}
+
+/* Apply & Reset Buttons */
+.apply-btn {
+  background-color: var(--text);
+  color: var(--bg);
+  border: none;
+  border-radius: 6px;
+  padding: 8px 14px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.apply-btn:hover {
+  opacity: 0.85;
+}
+
+.color-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+
+
+
+/* Light/Dark Sun/Moon Button */
+.theme-toggle { background: transparent; border: none; cursor: pointer; width: 24px; height: 24px; position: relative; display: flex; align-items: center; justify-content: center; color: var(--muted); }
 .theme-toggle:hover { color: var(--accent); }
-
-.theme-toggle svg { 
-  position: absolute; 
-  stroke-width: 2.1; 
-  transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s ease;
-}
-
-/* Morph State */
+.theme-toggle svg { position: absolute; stroke-width: 2.1; transition: transform 0.5s ease, opacity 0.3s ease; }
 .moon-icon { opacity: 0; transform: scale(0.4) rotate(-45deg); }
-.sun-icon  { opacity: 1; transform: scale(1) rotate(0); }
-
-[data-theme="dark"] .sun-icon  { opacity: 0; transform: scale(0.4) rotate(45deg); }
+.sun-icon { opacity: 1; transform: scale(1) rotate(0); }
+[data-theme="dark"] .sun-icon { opacity: 0; transform: scale(0.4) rotate(45deg); }
 [data-theme="dark"] .moon-icon { opacity: 1; transform: scale(1) rotate(0); color: var(--text); }
 
-
-/* ============================================================
-   MOBILE NAVIGATION
-   ============================================================ */
+/* Mobile Nav */
 .mobile-top-controls { display: none; }
 .top-drawer { display: none; }
-
 @media (max-width: 680px) {
-  nav {
-    display: flex; flex-direction: column; align-items: stretch;
-    padding: 0; width: calc(100% + 2rem); margin-left: -1rem; margin-right: -1rem;
-  }
-
-  .nav-desktop-only, .nav-right { display: none !important; }
-
-  .mobile-top-controls {
-    display: flex; justify-content: space-between; align-items: center;
-    width: 100%; padding: 10px 2rem;
-  }
-
-  .mobile-top-controls .top-ham {
-    display: flex; flex-direction: column; gap: 5px;
-    width: 32px; height: 42px; justify-content: center;
-    cursor: pointer;
-  }
-  .mobile-top-controls .top-ham span {
-    display: block; width: 22px; height: 2px; background: var(--muted);
-    border-radius: 2px; transition: transform 0.25s ease, opacity 0.2s ease;
-  }
+  nav { flex-direction: column; padding: 0; width: calc(100% + 2rem); margin-left: -1rem; margin-right: -1rem; }
+  .nav-desktop-only { display: none !important; }
+  .mobile-top-controls { display: flex; justify-content: space-between; align-items: center; width: 100%; padding: 10px 2rem; }
+  .mobile-top-controls .top-ham { display: flex; flex-direction: column; gap: 5px; width: 32px; height: 42px; justify-content: center; cursor: pointer; }
+  .mobile-top-controls .top-ham span { display: block; width: 22px; height: 2px; background: var(--muted); border-radius: 2px; transition: transform 0.25s ease, opacity 0.2s ease; }
   .mobile-top-controls .top-ham.is-open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
-  .mobile-top-controls .top-ham.is-open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+  .mobile-top-controls .top-ham.is-open span:nth-child(2) { opacity: 0; }
   .mobile-top-controls .top-ham.is-open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
-
-  .top-drawer {
-    display: grid; grid-template-rows: 0fr; overflow: hidden;
-    transition: grid-template-rows 0.38s ease, opacity 0.28s ease; opacity: 0;
-  }
+  .top-drawer { display: grid; grid-template-rows: 0fr; overflow: hidden; transition: grid-template-rows 0.38s ease, opacity 0.28s ease; opacity: 0; }
   .top-drawer.is-open { grid-template-rows: 1fr; opacity: 1; }
-
-  .top-drawer-links { 
-    list-style: none; padding: 0 1.5rem; text-align: left; min-height: 0; 
-  }
-  .top-drawer-links a {
-    display: block; padding: 12px 0; font-size: 0.95rem; font-weight: 600;
-    color: var(--muted); text-decoration: none; border-bottom: 1px solid var(--border);
-  }
-  .top-drawer-links li:last-child a { border-bottom: none; }
+  .top-drawer-links { list-style: none; padding: 0 1.5rem; text-align: left; min-height: 0; }
+  .top-drawer-links a { display: block; padding: 12px 0; font-size: 0.95rem; font-weight: 600; color: var(--muted); text-decoration: none; border-bottom: 1px solid var(--border); }
 }
 
+/* ── 6. Article Layout & Typography (Merged from articles.css) ── */
+.reading-container { max-width: 720px; margin: 0 auto; padding-top: 2rem; padding-bottom: 4rem; }
+.reading-content p { margin-top: 0; margin-bottom: 1.5rem; line-height: 1.8; font-size: 1.15rem; }
+.reading-content ol, .reading-content ul { margin: 1.5rem 0; padding-left: 3rem; list-style-position: outside; width: auto; }
+.reading-content li { margin-bottom: 0.8rem; line-height: 1.8; padding-left: 0.5rem; }
+
+/* Apply Dynamic Fonts to Headings */
+.reading-content h1, .reading-content h2, .reading-content h3, 
+.article-header__title, .article-header__subtitle {
+  font-family: var(--font-heading) !important;
+}
+
+.reading-content h1 { font-size: 2.6rem; font-weight: 600; line-height: 1.15; letter-spacing: -0.02em; color: var(--dark); margin-top: 2rem; margin-bottom: 1rem; }
+.reading-content h2 { font-size: 1.7rem; font-weight: 600; line-height: 1.3; letter-spacing: -0.01em; color: var(--dark); margin-top: 3.5rem; margin-bottom: 1rem; }
+.reading-content h3 { font-size: 1.28rem; font-weight: 600; line-height: 1.45; text-transform: none; color: var(--dark); margin-top: 2.4rem; margin-bottom: 0.8rem; }
+
+/* Article Header */
+.article-header { margin-top: 2rem; margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); display: block; }
+.article-header__parent { font-family: -apple-system, sans-serif; font-size: 0.875rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--accent); margin-bottom: 0.5rem; }
+.article-header__title { font-size: clamp(2.2rem, 3vw, 3.2rem); font-weight: 700 !important; line-height: 1.15; color: var(--dark); letter-spacing: -0.02em; margin: 0 0 0.5rem 0; }
+.article-header__subtitle { font-size: clamp(1.1rem, 1.5vw, 1.4rem); font-weight: 400 !important; line-height: 1.4; color: var(--muted); font-style: italic; margin: 0 0 1.5rem 0; }
+.article-header__meta { display: flex; align-items: center; flex-wrap: wrap; font-size: 0.95rem; color: var(--muted); font-family: -apple-system, sans-serif; margin: 0 0 1rem 0; }
+.article-header__author { font-weight: 600; color: var(--text); }
+.article-header__date { display: flex; align-items: center; }
+.article-header__date::before { content: "•"; margin: 0 0.75rem; color: var(--muted); opacity: 0.7; }
+.article-header__tags { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1rem; }
+.article-tag { font-size: 0.75rem; font-weight: 600; font-family: -apple-system, sans-serif; text-transform: uppercase; letter-spacing: 0.05em; padding: 0.35rem 0.85rem; border-radius: 999px; background: color-mix(in srgb, var(--border) 30%, transparent); border: 1px solid var(--border); color: var(--muted); transition: all 0.2s ease; cursor: default; }
+.article-tag:hover { background: var(--border); color: var(--text); transform: translateY(-1px); }
+
+/* MathJax */
+.reading-content mjx-container[display="true"] { margin-top: 2.5rem !important; margin-bottom: 2.5rem !important; overflow-x: auto; overflow-y: hidden; padding: 0.5em 0; }
+mjx-container svg { fill: var(--text); color: var(--text); }
+
+/* ── 7. Utilities & Scrollbar ── */
+.reading-progress { position: fixed; top: 0; left: 0; height: 4px; width: 0%; background: var(--accent); z-index: 2000; transition: width 0.1s linear; }
+html { scrollbar-color: var(--accent) var(--bg); scrollbar-width: thin; }
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 10px; }
+::-webkit-scrollbar-thumb:hover { background: color-mix(in srgb, var(--accent) 85%, var(--text)); }
+footer { padding: 3rem 0 4rem; text-align: center; font-size: 0.85rem; color: var(--muted); border-top: 1px solid var(--border); margin-top: 4rem; }
 
 /* ============================================================
-   FLOATING ARTICLE TOC
+   RESTORED: FLOATING ARTICLE TOC
    ============================================================ */
 .toc-wrapper {
   position: fixed; top: 50%; right: 10px;
@@ -254,7 +366,7 @@ nav a:hover, nav a.active { color: var(--accent); }
   width: 220px; max-height: 75vh; overflow-y: auto; overscroll-behavior: contain;
   position: absolute; right: 15px; top: 50%; transform: translateY(-50%);
   padding: 20px; background: var(--bg); border: 1px solid var(--border);
-  border-radius: 16px; box-shadow: 0 10px 20px rgba(209, 80, 29, 0.15);
+  border-radius: 16px; box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
 }
 .toc-wrapper:hover .toc-list { display: flex; }
 
@@ -278,32 +390,9 @@ nav a:hover, nav a.active { color: var(--accent); }
   transition: background 0.4s ease;
 }
 
-
 /* ============================================================
-   CUSTOM GLOBAL SCROLLBAR
+   RESTORED: MOBILE TOC OVERRIDES & UTILITIES
    ============================================================ */
-html { scrollbar-color: var(--accent) var(--bg); scrollbar-width: thin; }
-::-webkit-scrollbar { width: 8px; height: 8px; }
-::-webkit-scrollbar-track { background: var(--bg); }
-::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 10px; }
-::-webkit-scrollbar-thumb:hover { background: color-mix(in srgb, var(--accent) 85%, var(--text)); }
-
-/* ============================================================
-   MISC & UTILITIES
-   ============================================================ */
-footer { 
-  padding: 3rem 0 4rem; text-align: center; font-size: 0.85rem; 
-  color: var(--muted); border-top: 1px solid var(--border); margin-top: 4rem; 
-}
-
-@keyframes fadeUp { 
-  from { opacity: 0; transform: translateY(18px); } 
-  to { opacity: 1; transform: translateY(0); } 
-}
-
-.iframe-shield { position: absolute; inset: 0; z-index: 2; pointer-events: none; }
-
-/* Mobile TOC overrides */
 @media (max-width: 600px) {
   html, body { max-width: 100vw; overflow-x: hidden; position: relative; }
   .toc-container { 
@@ -313,3 +402,10 @@ footer {
   .toc-list li::before, .toc-list ul::before, .toc-list ol::before { max-width: 100%; pointer-events: none; }
   .toc-list li { max-width: 100%; word-wrap: break-word; overflow-wrap: break-word; display: block; }
 }
+
+@keyframes fadeUp { 
+  from { opacity: 0; transform: translateY(18px); } 
+  to { opacity: 1; transform: translateY(0); } 
+}
+
+.iframe-shield { position: absolute; inset: 0; z-index: 2; pointer-events: none; }
